@@ -1,4 +1,3 @@
-# Import Modules required 
 import git
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,13 +14,11 @@ import pickle
 import pandas as pd
 import cv2
 
-#Git cloning
 path = 'Enter the path where these images have to be saved'
 clone = 'https://bitbucket.org/jadslim/german-traffic-signs'
 g = git.Git(path).clone(clone)
 np.random.seed(0)
 
-#Loading the images into three sets
 with open('C:\\Users\\HP\\PycharmProjects\\IP\\Traffic Data\\german-traffic-signs\\train.p', 'rb') as f:
     train_data = pickle.load(f)
 with open('C:\\Users\\HP\\PycharmProjects\\IP\\Traffic Data\\german-traffic-signs\\valid.p', 'rb') as f:
@@ -31,7 +28,6 @@ with open('C:\\Users\\HP\\PycharmProjects\\IP\\Traffic Data\\german-traffic-sign
 
 print(type(train_data)) # we will get a dictionary which has features and lables
 
-# Unpack into features and labels
 X_train, y_train = train_data['features'], train_data['labels']
 #features corresponds to the trainig images in the pix values
 X_test, y_test = test_data['features'], test_data['labels']
@@ -52,7 +48,6 @@ assert(X_train.shape[1:] == (32,32,3)), 'The size of the images are not 32x32x3'
 assert(X_val.shape[1:] == (32,32,3)), 'The size of the images are not 32x32x3'
 assert(X_test.shape[1:] == (32,32,3)), 'The size of the images are not 32x32x3'
 
-#Load the Signnames which have classId with its corresponding Sign description
 data = pd.read_csv('C:\\Users\\HP\\PycharmProjects\\IP\\Traffic Data\\german-traffic-signs\\signnames.csv')
 print(data)
 
@@ -73,10 +68,7 @@ for i in range(cols):
         if i == 2:
             axs[j][i].set_title(str(j) + '-' + row["SignName"])
             num_of_samples.append(len(x_selected))
-
-
-            
-#Preprocessing and Data Augmentation of data
+     
 from keras.preprocessing.image import ImageDataGenerator            
 def grayscale(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -126,8 +118,6 @@ y_train = to_categorical(y_train, 43)
 y_test = to_categorical(y_test, 43)
 y_val = to_categorical(y_val, 43)
 
-
-#Neural Network
 def LeNet_model():
     model = Sequential()
     model.add(Conv2D(30, (5, 5), input_shape=(32, 32, 1), activation='relu', strides= 1))
@@ -146,7 +136,7 @@ print(model.summary())#Show the detailed summary of our Architecture
 
 #model.fit_generator is used to parallely run the image generator along with the model
 model.fit_generator(datagen.flow(X_train, y_train, batch_size = 50), steps_per_epoch = 2000, epochs = 10, validation_data = (X_val, y_val), shuffle= 1 )
-#model.fit(X_train, y_train, epochs= 10, validation_data = (X_val, y_val), batch_size= 400, verbose= 1, shuffle= 1)
+
 
 #Score Evaluation 
 score = model.evaluate(X_test, y_test, verbose=0)
@@ -154,8 +144,6 @@ print(type(score))
 print('Test score is:', score[0])
 print('Test accuracy is:', score[1])
 
-
-# testing the model
 import requests
 from PIL import Image
 
