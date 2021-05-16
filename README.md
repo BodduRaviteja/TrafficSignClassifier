@@ -6,10 +6,9 @@ The workflow follows:
 1. Importing required Modules 
 2. Git cloning
 https://bitbucket.org/jadslim/german-traffic-signs
-3. Unpacking of data
-4. Data pre-processing and Augmentation 
-5. Model Definition with tuning hyperparameters 
-6. Model Score Evaluation
-7. Model testing
+3. Data pre-processing and Augmentation 
+4. Model Definition with tuned hyperparameters 
+5. Model Score Evaluation & testing
+
 
 
