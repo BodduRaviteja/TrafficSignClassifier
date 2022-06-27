@@ -1,4 +1,4 @@
-#Traffic Sign Classifier
+# Traffic Sign Classifier
 In this Project a CNN is implemented to classify the Traffic signs. I have used Keras Framework to implement the CNN
 
 # Pipeline:
